@@ -3,7 +3,7 @@
   <head>
     <!-- Meta Information -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Voting Page</title>
+    <title>Poll Results</title>
 
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css" />
@@ -34,6 +34,7 @@
 
   </head>
 
+
   <body>
     <!-- Top nav bar (fixed) -->
     <nav>
@@ -45,23 +46,7 @@
       <h1>What do we have for dinner today?</h1>
       <br>
       <div>
-        <text>Order the options from best(top) to worst(bottom)</text>
-        <div id="options-container">
-          <div class="options" draggable="true">Pizza</div>
-          <div class="options" draggable="true">Steak</div>
-          <div class="options" draggable="true">Salad</div>
-          <div class="options" draggable="true">Pho</div>
-        </div>
+        <text>Thank you for your response! You can now view what other people have responded via the link below.</text>
       </div>
-      <script src="/scripts/helpers.js"></script>
-      <script>
-        enableDragAndDrop('options-container');
-      </script>
-      <form action="/">
-        <label for="voter name">Your name:</label>
-        <input type="text" id="voterName" name="voterName" placeholder="Your name">
-        <br>
-        <input type="button" value="Submit">
-      </form>
-
+      <a href="https://localhost:8080/results">Click me to see results!</a>
     </body>
