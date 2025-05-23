@@ -48,3 +48,15 @@ function enableDragAndDrop(containerId) {
     });
   });
 }
+
+
+function rankOptions(arr) {
+  let optionScores = {};
+  const maxScore = arr.length;
+
+  for(let option of arr) {
+    optionScores[option] = maxScore - arr.indexOf(option);
+  }
+
+  return optionScores;
+}
