@@ -42,3 +42,7 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+app.get('/vote', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/vote.html'));
+});
