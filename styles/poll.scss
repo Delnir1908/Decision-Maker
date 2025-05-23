@@ -45,3 +45,13 @@ input {
   text-align: center;
   cursor: pointer;
 }
+
+.message {
+  width: 100%;
+  height: 5em;
+  border-color: rgb(54, 53, 53);
+  background-color: rgb(106, 201, 249);
+  border-radius: 1em;
+  padding: 0.5em;
+  resize: none;
+}

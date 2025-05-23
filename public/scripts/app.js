@@ -11,4 +11,14 @@ $(document).ready(function() {
 
     $('.options').append($option);
   });
+
+  $(document).on('click', '.fa-message', function() {
+    const $description = $(`
+      <span>
+        <textarea type="text" class="message" placeholder="Add an optional description here"></textarea>
+      </span>
+    `);
+
+    $(this).parent('.individual-option').after($description);
+  });
 });
