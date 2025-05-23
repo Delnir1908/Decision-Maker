@@ -12,13 +12,64 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+  <link rel="stylesheet" href="/styles/poll.css" />
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+
+  <!-- Project Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poetsen+One&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
+  <!-- Top Nav Bar -->
+  <nav>
+    <i class="fa-solid fa-chart-simple fa-xl"></i>
+    <span class="title">Decision Maker</span>
+  </nav>
+  <h1>Create a New Poll!</h1>
+  <form>
+    <label for="poll-title">Title</label><br>
+    <input id="poll-title" type="text"><br>
+
+    <label for="options">Options</label><br>
+    <div class="options">
+      <span class="individual-option">
+        <input type="text">
+        <i class="fa-regular fa-message"></i>
+        <i class="fa-regular fa-trash-can"></i>
+      </span>
+      <span class="individual-option">
+        <input type="text">
+        <i class="fa-regular fa-message"></i>
+        <i class="fa-regular fa-trash-can"></i>
+      </span>
+    </div>
+
+    <span class="poll-features">
+      <button type="button" id="add-option">
+        <i class="fa-solid fa-plus"></i>Add Option
+      </button>
+    </span>
+
+    <span>
+      <label for="name">Your Name:</label>
+      <input type="text" id="name-input" placeholder="e.g. John Doe">
+    </span>
+    <span>
+      <label for="email">Your Email:</label>
+      <input type="text" id="email-input" placeholder="e.g. johndoe@gmail.com">
+    </span>
+
+    <button type="submit" class="submission">Submit</button>
+  </form>
+
 </body>
 
 </html>
