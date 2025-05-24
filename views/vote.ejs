@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= pollTitle %> - Vote</title>
+</head>
+<body>
+  <h1><%= pollTitle %></h1>
+  <form id="voteForm">
+    <div>
+      <p>Order the options from best (top) to worst (bottom):</p>
+      <div id="options-container">
+        <% options.forEach(option => { %>
+          <div class="options" draggable="true" data-option-id="<%= option.id %>">
+            <%= option.name %>
+            <% if (option.description) { %>
+              <small>(<%= option.description %>)</small>
+            <% } %>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+    <label for="voterName">Your name:</label>
+    <input type="text" id="voterName" name="voterName" placeholder="Your name">
+    <button type="submit">Submit Vote</button>
+  </form>
+  <script src="/scripts/helpers.js"></script>
+  <script>
+    enableDragAndDrop('options-container');
+  </script>
+</body>
+</html>
