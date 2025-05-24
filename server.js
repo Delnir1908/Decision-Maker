@@ -1,5 +1,6 @@
 // load .env data into process.env
 require('dotenv').config();
+const db = require('./db');
 
 // Web server config
 const express = require('express');
@@ -39,10 +40,28 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+
+
+app.get('/:id', async (req, res) => {
+  try {
+    const pollId = req.params.id;
+    const pollQuery = 'SELECT title FROM polls WHERE id = $1';
+    const pollResult = await db.query(pollQuery, [pollId]);
+    if (pollResult.rows.length === 0) {
+      return res.status(404).send("Poll not found");
+    }
+    const optionsQuery = 'SELECT id, name FROM options WHERE poll_id = $1';
+    const optionsResult = await db.query(optionsQuery, [pollId]);
+    res.render('poll', {
+      pollTitle: pollResult.rows[0].title,
+      options: optionsResult.rows
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
 });
 
-app.get('/vote', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/vote.html'));
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
 });
