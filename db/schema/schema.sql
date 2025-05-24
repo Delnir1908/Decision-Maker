@@ -18,7 +18,7 @@ CREATE TABLE votes (
   id SERIAL PRIMARY KEY NOT NULL,
   poll_id INTEGER REFERENCES polls(id) ON DELETE CASCADE,
   option_id INTEGER REFERENCES options(id) ON DELETE CASCADE,
-  voter_name VARCHAR(255) NOT NULL,
+  voter_name VARCHAR(255),
   score INTEGER NOT NULL,
   UNIQUE (poll_id, voter_name, option_id)
 );

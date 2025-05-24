@@ -7,7 +7,7 @@ const runResetDB = async () => {
   try {
     console.log(chalk.cyan(`-> Connecting to PG on ${process.env.DB_HOST} as ${process.env.DB_USER}...`));
 
-    // Connect to default "postgres" DB to drop/create app DB
+    //Connect to default "postgres" DB to drop/create app DB
     const rootClient = new Client({
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
@@ -37,11 +37,24 @@ const runResetDB = async () => {
     });
     await client.connect();
 
-    // Load only the single schema.sql file
+    // Load schema.sql
     console.log(chalk.cyan(`-> Loading Schema File ...`));
-    const sql = fs.readFileSync('./db/schema/schema.sql', 'utf8');
+    const schemaSQL = fs.readFileSync('./db/schema/schema.sql', 'utf8');
     console.log(`\t-> Running ${chalk.green('schema.sql')}`);
-    await client.query(sql);
+    await client.query(schemaSQL);
+
+    // Load seeds.sql
+    console.log(chalk.cyan(`-> Loading Seed File ...`));
+    const seedsSQL = fs.readFileSync('./db/seeds/seeds.sql', 'utf8');
+    console.log(`\t-> Running ${chalk.green('seeds.sql')}`);
+    await client.query(seedsSQL);
+
+    // Reset sequences to avoid future conflicts
+    await client.query(`
+      SELECT setval('polls_id_seq', (SELECT MAX(id) FROM polls));
+      SELECT setval('options_id_seq', (SELECT MAX(id) FROM options));
+      SELECT setval('votes_id_seq', (SELECT MAX(id) FROM votes));
+    `);
 
     await client.end();
     console.log(chalk.green('Database reset successful!'));
