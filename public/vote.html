@@ -44,24 +44,24 @@
     <body>
       <h1>What do we have for dinner today?</h1>
       <br>
-      <div>
-        <text>Order the options from best(top) to worst(bottom)</text>
-        <div id="options-container">
-          <div class="options" draggable="true">Pizza</div>
-          <div class="options" draggable="true">Steak</div>
-          <div class="options" draggable="true">Salad</div>
-          <div class="options" draggable="true">Pho</div>
-        </div>
-      </div>
-      <script src="/scripts/helpers.js"></script>
-      <script>
-        enableDragAndDrop('options-container');
-      </script>
       <form action="/">
+        <div>
+          <text>Order the options from best(top) to worst(bottom)</text>
+          <div id="options-container">
+            <div class="options" draggable="true">Pizza</div>
+            <div class="options" draggable="true">Steak</div>
+            <div class="options" draggable="true">Salad</div>
+            <div class="options" draggable="true">Pho</div>
+          </div>
+        </div>
+        <script src="/scripts/helpers.js"></script>
+        <script>
+          enableDragAndDrop('options-container');
+        </script>
         <label for="voter name">Your name:</label>
         <input type="text" id="voterName" name="voterName" placeholder="Your name">
         <br>
-        <input type="button" value="Submit">
+        <button type="submit">Submit Vote</button>
       </form>
 
     </body>
