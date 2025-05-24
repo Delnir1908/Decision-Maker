@@ -61,3 +61,19 @@ input {
   padding: 0.5em;
   resize: none;
 }
+
+.custom-message {
+  cursor: pointer;
+}
+
+.custom-message:hover {
+  color: #2b78e4;
+}
+
+.fa-trash-can {
+  cursor: pointer;
+}
+
+.fa-trash-can:hover {
+  color: rgb(207, 42, 42);
+}
