@@ -1,31 +1,67 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title><%= pollTitle %> - Vote</title>
-</head>
-<body>
-  <h1><%= pollTitle %></h1>
-  <form id="voteForm">
-    <div>
-      <p>Order the options from best (top) to worst (bottom):</p>
-      <div id="options-container">
-        <% options.forEach(option => { %>
-          <div class="options" draggable="true" data-option-id="<%= option.id %>">
-            <%= option.name %>
-            <% if (option.description) { %>
-              <small>(<%= option.description %>)</small>
-            <% } %>
+<html lang="en">
+  <head>
+    <!-- Meta Information -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= pollTitle %> - Vote</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+
+    <!-- External JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/scripts/composer-char-counter.js"></script>
+    <script src="/scripts/helpers.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- App JS -->
+    <script type="text/javascript" src="/scripts/client.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <!-- Top nav bar (fixed) -->
+    <nav>
+      <span class="header">Decision Maker</span>
+    </nav>
+
+    <main>
+      <h1><%= pollTitle %></h1>
+      <form id="voteForm">
+        <div>
+          <p>Order the options from best (top) to worst (bottom):</p>
+          <div id="options-container">
+            <% options.forEach(option => { %>
+              <div class="options" draggable="true" data-option-id="<%= option.id %>">
+                <%= option.name %>
+                <% if (option.description) { %>
+                  <small>(<%= option.description %>)</small>
+                <% } %>
+              </div>
+            <% }); %>
           </div>
-        <% }); %>
-      </div>
-    </div>
-    <label for="voterName">Your name:</label>
-    <input type="text" id="voterName" name="voterName" placeholder="Your name">
-    <button type="submit">Submit Vote</button>
-  </form>
-  <script src="/scripts/helpers.js"></script>
-  <script>
-    enableDragAndDrop('options-container');
-  </script>
-</body>
+        </div>
+        <label for="voterName">Your name:</label>
+        <input type="text" id="voterName" name="voterName" placeholder="Your name">
+        <br>
+        <button type="submit">Submit Vote</button>
+      </form>
+    </main>
+    <script>
+      enableDragAndDrop('options-container');
+    </script>
+  </body>
 </html>

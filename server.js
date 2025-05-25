@@ -52,7 +52,7 @@ app.get('/:id', async (req, res) => {
     }
     const optionsQuery = 'SELECT id, name FROM options WHERE poll_id = $1';
     const optionsResult = await db.query(optionsQuery, [pollId]);
-    res.render('poll', {
+    res.render('vote', {
       pollTitle: pollResult.rows[0].title,
       options: optionsResult.rows
     });
