@@ -54,14 +54,34 @@
             <% }); %>
           </div>
         </div>
-        <label for="voterName">Your name:</label>
-        <input type="text" id="voterName" name="voterName" placeholder="Your name">
-        <br>
+
+        <% if (requiresName) { %>
+          <label for="voterName">Your name:</label>
+          <input type="text" id="voterName" name="voterName" placeholder="Your name">
+          <br>
+        <% } %>
+
         <button type="submit">Submit Vote</button>
       </form>
     </main>
     <script>
-      enableDragAndDrop('options-container');
+      document.getElementById('voteForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const rankedOptions = Array.from(document.querySelectorAll('.options'))
+          .map(div => div.dataset.optionId);
+
+        const formData = {
+          rankedOptions,
+          voterName: document.getElementById('voterName')?.value || ''
+        };
+
+        fetch(this.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        }).then(() => window.location = this.action);
+      });
     </script>
+
   </body>
 </html>
