@@ -40,18 +40,16 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-
-
 app.get('/:id', async (req, res) => {
   try {
     const pollId = req.params.id;
     const pollQuery = 'SELECT title FROM polls WHERE id = $1';
-    const pollResult = await db.query(pollQuery, [pollId]);
+    const pollResult = await db.pool.query(pollQuery, [pollId]);
     if (pollResult.rows.length === 0) {
       return res.status(404).send("Poll not found");
     }
     const optionsQuery = 'SELECT id, name FROM options WHERE poll_id = $1';
-    const optionsResult = await db.query(optionsQuery, [pollId]);
+    const optionsResult = await db.pool.query(optionsQuery, [pollId]);
     res.render('vote', {
       pollTitle: pollResult.rows[0].title,
       options: optionsResult.rows
