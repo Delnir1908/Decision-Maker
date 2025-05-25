@@ -62,6 +62,12 @@ app.get('/:id', async (req, res) => {
   }
 });
 
+app.get('/:id/voted', async (req, res) => {
+  const pollId = req.params.id;
+  const poll = await db.getPollById(pollId);
+  res.render('voted', { pollId, pollTitle: poll.title });
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

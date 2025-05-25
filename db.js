@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+
 const pool = new Pool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -7,4 +8,10 @@ const pool = new Pool({
   port: process.env.DB_PORT
 });
 
-module.exports = pool;
+async function getPollById(pollId) {
+  const res = await pool.query('SELECT * FROM polls WHERE id = $1', [pollId]);
+  return res.rows[0];
+}
+
+
+module.exports = {pool, getPollById,};
