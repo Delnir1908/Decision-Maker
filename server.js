@@ -17,6 +17,7 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(express.json());
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -40,20 +41,20 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-
-
 app.get('/:id', async (req, res) => {
   try {
     const pollId = req.params.id;
-    const pollQuery = 'SELECT title FROM polls WHERE id = $1';
-    const pollResult = await db.query(pollQuery, [pollId]);
+    const pollQuery = 'SELECT title, requires_name FROM polls WHERE id = $1';
+    const pollResult = await db.pool.query(pollQuery, [pollId]);
     if (pollResult.rows.length === 0) {
       return res.status(404).send("Poll not found");
     }
     const optionsQuery = 'SELECT id, name FROM options WHERE poll_id = $1';
-    const optionsResult = await db.query(optionsQuery, [pollId]);
-    res.render('poll', {
+    const optionsResult = await db.pool.query(optionsQuery, [pollId]);
+    res.render('vote', {
+      pollId,
       pollTitle: pollResult.rows[0].title,
+      requiresName: pollResult.rows[0].requires_name,
       options: optionsResult.rows
     });
   } catch (err) {
@@ -61,6 +62,77 @@ app.get('/:id', async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+app.get('/:id/voted', async (req, res) => {
+  const pollId = req.params.id;
+  const poll = await db.getPollById(pollId);
+  res.render('voted', { pollId, pollTitle: poll.title });
+});
+
+app.post('/:id/voted', async (req, res) => {
+  const pollId = req.params.id;
+  const { voterName, rankedOptions } = req.body;
+
+  try {
+    for (let i = 0; i < rankedOptions.length; i++) {
+      const optionId = rankedOptions[i];
+      const score = rankedOptions.length - i;
+      await db.pool.query(
+        `INSERT INTO votes (poll_id, option_id, voter_name, score)
+         VALUES ($1, $2, $3, $4)`,
+        [pollId, optionId, voterName || null, score]
+      );
+    }
+    res.redirect(`/${pollId}/voted`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
+
+app.get('/:id/results', async (req, res) => {
+  const pollId = req.params.id;
+
+  // Get poll title
+  const pollResult = await db.pool.query('SELECT title FROM polls WHERE id = $1', [pollId]);
+  if (pollResult.rows.length === 0) {
+    return res.status(404).send("Poll not found");
+  }
+
+  // Get ranked options with total scores
+  const optionsQuery = `
+    SELECT
+      options.id,
+      options.name,
+      options.description,
+      SUM(votes.score) AS total_score
+    FROM options
+    LEFT JOIN votes ON votes.option_id = options.id AND votes.poll_id = options.poll_id
+    WHERE options.poll_id = $1
+    GROUP BY options.id, options.name, options.description
+    ORDER BY total_score DESC, options.name DESC;
+  `;
+  const optionsResult = await db.pool.query(optionsQuery, [pollId]);
+
+  const options = [];
+  for (let i = 0; i < optionsResult.rows.length; i++) {
+    const opt = optionsResult.rows[i];
+    options.push({
+      id: opt.id,
+      name: opt.name,
+      description: opt.description,
+      total_score: opt.total_score,
+      rank: i + 1
+    });
+  }
+
+  res.render('results', {
+    pollTitle: pollResult.rows[0].title,
+    options
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
