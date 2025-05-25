@@ -66,6 +66,49 @@ app.get('/:id/voted', async (req, res) => {
   res.render('voted', { pollId, pollTitle: poll.title });
 });
 
+app.get('/:id/results', async (req, res) => {
+  const pollId = req.params.id;
+
+  // Get poll title
+  const pollResult = await db.pool.query('SELECT title FROM polls WHERE id = $1', [pollId]);
+  if (pollResult.rows.length === 0) {
+    return res.status(404).send("Poll not found");
+  }
+
+  // Get ranked options with total scores
+  const optionsQuery = `
+    SELECT
+      options.id,
+      options.name,
+      options.description,
+      SUM(votes.score) AS total_score
+    FROM options
+    LEFT JOIN votes ON votes.option_id = options.id AND votes.poll_id = options.poll_id
+    WHERE options.poll_id = $1
+    GROUP BY options.id, options.name, options.description
+    ORDER BY total_score DESC, options.name DESC;
+  `;
+  const optionsResult = await db.pool.query(optionsQuery, [pollId]);
+
+  const options = [];
+  for (let i = 0; i < optionsResult.rows.length; i++) {
+    const opt = optionsResult.rows[i];
+    options.push({
+      id: opt.id,
+      name: opt.name,
+      description: opt.description,
+      total_score: opt.total_score,
+      rank: i + 1
+    });
+  }
+
+  res.render('results', {
+    pollTitle: pollResult.rows[0].title,
+    options
+  });
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

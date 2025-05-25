@@ -4,7 +4,8 @@ DROP TABLE IF EXISTS votes CASCADE;
 
 CREATE TABLE polls (
   id SERIAL PRIMARY KEY NOT NULL,
-  title VARCHAR(255) NOT NULL
+  title VARCHAR(255) NOT NULL,
+  requires_name BOOLEAN DEFAULT false
 );
 
 CREATE TABLE options (
