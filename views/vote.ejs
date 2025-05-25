@@ -40,7 +40,7 @@
 
     <main>
       <h1><%= pollTitle %></h1>
-      <form id="voteForm">
+      <form id="voteForm" method="POST" action="/<%= pollId %>/voted">
         <div>
           <p>Order the options from best (top) to worst (bottom):</p>
           <div id="options-container">
