@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 app.get('/:id', async (req, res) => {
   try {
     const pollId = req.params.id;
-    const pollQuery = 'SELECT title FROM polls WHERE id = $1';
+    const pollQuery = 'SELECT title, requires_name FROM polls WHERE id = $1';
     const pollResult = await db.pool.query(pollQuery, [pollId]);
     if (pollResult.rows.length === 0) {
       return res.status(404).send("Poll not found");
@@ -67,6 +67,28 @@ app.get('/:id/voted', async (req, res) => {
   const poll = await db.getPollById(pollId);
   res.render('voted', { pollId, pollTitle: poll.title });
 });
+
+app.post('/:id/voted', async (req, res) => {
+  const pollId = req.params.id;
+  const { voterName, rankedOptions } = req.body;
+
+  try {
+    for (let i = 0; i < rankedOptions.length; i++) {
+      const optionId = rankedOptions[i];
+      const score = rankedOptions.length - i;
+      await db.pool.query(
+        `INSERT INTO votes (poll_id, option_id, voter_name, score)
+         VALUES ($1, $2, $3, $4)`,
+        [pollId, optionId, voterName || null, score]
+      );
+    }
+    res.redirect(`/${pollId}/voted`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
 
 app.get('/:id/results', async (req, res) => {
   const pollId = req.params.id;
