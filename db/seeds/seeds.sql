@@ -1,10 +1,10 @@
 -- Polls
-INSERT INTO polls (id, title) VALUES
-  (1, 'What do we have for dinner?'),
-  (2, 'Which movie should we watch?'),
-  (3, 'Where should we go for vacation?'),
-  (4, 'What game should we play tonight?'),
-  (5, 'Which book should we read next?');
+INSERT INTO polls (id, title, requires_name) VALUES
+  (1, 'What do we have for dinner?', true),
+  (2, 'Which movie should we watch?', false),
+  (3, 'Where should we go for vacation?', true),
+  (4, 'What game should we play tonight?', false),
+  (5, 'Which book should we read next?', true);
 
 -- Options (some with description, some without)
 INSERT INTO options (id, poll_id, name, description) VALUES
