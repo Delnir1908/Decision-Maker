@@ -23,7 +23,6 @@
     <!-- External JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/scripts/composer-char-counter.js"></script>
-    <script src="/scripts/helpers.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- App JS -->
@@ -46,9 +45,9 @@
           <div id="options-container">
             <% options.forEach(option => { %>
               <div class="options" draggable="true" data-option-id="<%= option.id %>">
-                <%= option.name %>
+                <span><%= option.name %></span>
                 <% if (option.description) { %>
-                  <small>(<%= option.description %>)</small>
+                  <small><%= `(${option.description})` %></small>
                 <% } %>
               </div>
             <% }); %>
