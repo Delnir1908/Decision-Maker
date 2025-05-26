@@ -49,7 +49,7 @@ app.get('/:id', async (req, res) => {
     if (pollResult.rows.length === 0) {
       return res.status(404).send("Poll not found");
     }
-    const optionsQuery = 'SELECT id, name FROM options WHERE poll_id = $1';
+    const optionsQuery = 'SELECT id, name, description FROM options WHERE poll_id = $1';
     const optionsResult = await db.pool.query(optionsQuery, [pollId]);
     res.render('vote', {
       pollId,
