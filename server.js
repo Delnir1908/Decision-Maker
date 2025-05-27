@@ -6,7 +6,7 @@ const db = require('./db');
 const express = require('express');
 const morgan = require('morgan');
 
-//mailgun api
+// mailgun api
 const FormData = require('form-data');
 const Mailgun =require("mailgun.js");
 
@@ -54,12 +54,35 @@ app.post('/polls', (req, res) => {
     })
     .then((pollId) => {
       res.json({ redirectTo: `/${pollId}/admin` });
+      formCreationEmail(pollId, req.body.email);
     })
     .catch((error) => {
       console.error('Error creating poll:', error);
       res.status(500).send('Error creating poll.');
     });
 });
+
+const formCreationEmail = function(pollId, email) {
+  const mailgun = new Mailgun(FormData);
+  const mg = mailgun.client({
+    username: 'api',
+    key: process.env.MAILGUN_API_KEY || "API_KEY"
+  });
+
+  mg.messages.create('sandboxa33433e90be542e3bfd7314704bc0bb1.mailgun.org', {
+    from: "Decision Maker <mailgun@sandboxa33433e90be542e3bfd7314704bc0bb1.mailgun.org>",
+    to: [`${email}`],
+    subject: "Poll Creation Successful",
+    text: `
+    Thank you for choosing Decision Maker!
+    To begin receiving votes, forward the following link: http://localhost:8080/${pollId}.
+    To view the results, please visit: http://localhost:8080/${pollId}/results.
+    Have a great day!
+    `
+  })
+  .then(msg => console.log(msg))
+  .catch(err => console.log(err));
+};
 
 app.get('/:pollId/admin', (req, res) => {
   const { pollId } = req.params;
