@@ -6,6 +6,8 @@ CREATE TABLE polls (
   id SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(255) NOT NULL,
   requires_name BOOLEAN DEFAULT false
+  creator_name VARCHAR(255) NOT NULL,
+  creator_email VARCHAR(255) NOT NULL,
 );
 
 CREATE TABLE options (

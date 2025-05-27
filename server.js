@@ -33,6 +33,10 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 // Note: mount other resources here, using the same pattern above
 
+//mailgun api
+import FormData from "form-data";
+import Mailgun from "mailgun.js";
+
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
@@ -69,9 +73,44 @@ app.get('/:id/voted', async (req, res) => {
   res.render('voted', { pollId, pollTitle: poll.title });
 });
 
+async function sendSimpleMessage(poll, pollId) {
+  const mailgun = new Mailgun(FormData);
+  const mg = mailgun.client({
+    username: "api",
+    key: process.env.API_KEY || "API_KEY",
+  });
+  try {
+    const creatorName = poll.creator_name;
+    const creatorEmail = poll.creator_email;
+    const data = await mg.messages.create("sandboxe956d6a4be9d4cfa9216113749d2267f.mailgun.org", {
+      from: "Mailgun Sandbox <postmaster@sandboxe956d6a4be9d4cfa9216113749d2267f.mailgun.org>",
+      to: [`${creatorName} <${creatorEmail}>`],
+      subject: `New vote cast on your poll.`,
+      text: `
+        Hello ${creatorName},
+        Your poll has been updated with a new vote.
+        Please see the results at http://localhost:8080/${pollId}/results
+        And your admin link at http://localhost:8080/${pollId}/main
+        Cheers!
+      `,
+    });
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 app.post('/:id/voted', async (req, res) => {
   const pollId = req.params.id;
+  const poll = await db.getPollById(pollId);
   const { voterName, rankedOptions } = req.body;
+
+  if (!poll) {
+    return res.status(404).send('Poll not found');
+  }
+  if (!Array.isArray(rankedOptions)) {
+    return res.status(400).send('Invalid ranked options');
+  }
 
   try {
     for (let i = 0; i < rankedOptions.length; i++) {
@@ -83,6 +122,7 @@ app.post('/:id/voted', async (req, res) => {
         [pollId, optionId, voterName || null, score]
       );
     }
+    await sendSimpleMessage(poll, pollId);
     res.redirect(`/${pollId}/voted`);
   } catch (err) {
     console.error(err);
