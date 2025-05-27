@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Users</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/nav.css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+
+  <!-- Project Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poetsen+One&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <nav>
+    <i class="fa-solid fa-chart-simple fa-xl"></i>
+    <span class="title">Decision Maker</span>
+  </nav>
+  <h1>Thank you for using Decision Maker!</h1>
+  <h2>Now you can share your poll with the world!</h2>
+  <h3>
+    Send the 'Share with friends' link below to begin receiving results, 
+    and use the 'View the Results' link to see people's responses.
+  </h3>
+  <span class="link"><a href="/<%= pollId %>" />Share with friends!</span>
+  <span class="link"><a href="/<%= pollId %>/results" />View the results.</span>
+</body>
+
+</html>

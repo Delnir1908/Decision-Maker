@@ -24,6 +24,8 @@ app.use(express.json());
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
+const { createPoll, addOptions } = require('./db/queries/polls');
+const { idFromTitle } = require('./db/queries/id-from-title');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -40,6 +42,25 @@ app.use('/users', usersRoutes);
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+app.post('/polls', (req, res) => {
+  createPoll(req.body)
+    .then((pollId) => {
+      return addOptions(pollId, req.body.options).then(() => pollId);
+    })
+    .then((pollId) => {
+      res.json({ redirectTo: `/${pollId}/admin` });
+    })
+    .catch((error) => {
+      console.error('Error creating poll:', error);
+      res.status(500).send('Error creating poll.');
+    });
+});
+
+app.get('/:pollId/admin', (req, res) => {
+  const { pollId } = req.params;
+  res.render('admin', { pollId });
+})
 
 app.get('/:id', async (req, res) => {
   try {

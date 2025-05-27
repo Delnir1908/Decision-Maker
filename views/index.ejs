@@ -34,21 +34,21 @@
     <span class="title">Decision Maker</span>
   </nav>
   <h1>Create a New Poll!</h1>
-  <form>
-    <label for="poll-title">Title</label><br>
-    <input id="poll-title" type="text"><br>
+  <form method="POST" action="/polls">
+    <label for="title">Title</label><br>
+    <input id="poll-title" type="text" name="title" placeholder="Enter your poll title!"><br>
 
     <label for="options">Options</label><br>
-    <div class="options">
+    <div class="options" id="options-1">
       <span class="individual-option">
-        <input type="text">
+        <input type="text" name="option">
         <i class="fa-regular fa-message custom-message"></i>
         <i class="fa-regular fa-trash-can"></i>
       </span>
     </div>
-    <div class="options">
+    <div class="options" id="options-2">
       <span class="individual-option">
-        <input type="text">
+        <input type="text" name="option">
         <i class="fa-regular fa-message custom-message"></i>
         <i class="fa-regular fa-trash-can"></i>
       </span>
@@ -60,12 +60,12 @@
     </span>
 
     <span>
-      <label for="name">Your Name:</label>
-      <input type="text" id="name-input" placeholder="e.g. John Doe">
+      <label for="creator">Your Name:</label>
+      <input type="text" id="name-input" name="creator" placeholder="e.g. John Doe">
     </span>
     <span>
       <label for="email">Your Email:</label>
-      <input type="text" id="email-input" placeholder="e.g. johndoe@gmail.com">
+      <input type="text" id="email-input" name="email" placeholder="e.g. johndoe@gmail.com">
     </span>
 
     <button type="submit" class="submission">Submit</button>
