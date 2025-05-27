@@ -6,6 +6,10 @@ const db = require('./db');
 const express = require('express');
 const morgan = require('morgan');
 
+//mailgun api
+const FormData = require('form-data');
+const Mailgun =require("mailgun.js");
+
 const PORT = process.env.PORT || 8080;
 const app = express();
 
@@ -32,10 +36,6 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 // Note: mount other resources here, using the same pattern above
-
-//mailgun api
-import FormData from "form-data";
-import Mailgun from "mailgun.js";
 
 // Home page
 // Warning: avoid creating more routes in this file!
