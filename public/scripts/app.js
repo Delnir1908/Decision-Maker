@@ -1,17 +1,22 @@
 // Client facing scripts here
+
 $(document).ready(function() {
+
+  let optionCounter = 2;
+
   $("#add-option").on('click', function() {
+    optionCounter++;
     const $option = $(`
-      <div class="options">
+      <div class="options" id="options-${optionCounter}">
         <span class="individual-option">
-          <input type="text">
+          <input type="text" name="option">
           <i class="fa-regular fa-message custom-message"></i>
           <i class="fa-regular fa-trash-can"></i>
         </span>
       </div>
     `);
 
-    $(this).before($option);
+    $('.options').last().after($option);
   });
 
   $(document).on('click', '.custom-message', function() {
@@ -34,5 +39,56 @@ $(document).ready(function() {
   $(document).on('click', '.fa-trash-can', function() {
     const $option = $(this).closest('.options');
     $option.remove();
-  })
+  });
+
+  $('form').on('submit', function(event) {
+    event.preventDefault();
+    const $form = $(this);
+
+    const optionsArray = [];
+    $('.options').each(function() {
+      const $input = $(this).find('input[name="option"]');
+      const $textarea = $(this).find('textarea[name="description"]');
+
+      if ($input.length > 0) {
+        const optionName = $input.val();
+        const optionDescription = $textarea.length > 0 ? $textarea.val().trim() : null;
+
+        optionsArray.push({
+          name: optionName,
+          description: optionDescription
+        });
+      }
+    });
+
+    const title = $form.find('input[name="title"]').val();
+    const creator = $form.find('input[name="creator"]').val();
+    const email = $form.find('input[name="email"]').val();
+
+    const $data = {
+      title: title,
+      options: optionsArray,
+      creator: creator,
+      email: email
+    }
+
+    console.log('Form Data:', $data);
+
+    $.ajax({
+      type: 'POST',
+      url: '/polls',
+      data: JSON.stringify($data),
+      contentType: 'application/json',
+      success: function(response) {
+        if (response.redirectTo) {
+          window.location.href = response.redirectTo;
+        }
+      },
+      error: function(error) {
+        console.error('Error creating poll:', error);
+        alert('There was an error creating your poll. Please try again.');
+      }
+    });
+  });
+
 });
