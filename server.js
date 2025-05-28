@@ -134,7 +134,7 @@ async function sendSimpleMessage(poll, pollId) {
         Hello ${creatorName},
         Your poll has been updated with a new vote.
         Please see the results at http://localhost:8080/${pollId}/results
-        And your admin link at http://localhost:8080/${pollId}/main
+        And your admin link at http://localhost:8080/${pollId}/admin
         Cheers!
       `,
     });
