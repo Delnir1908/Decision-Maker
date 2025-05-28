@@ -46,14 +46,14 @@
       <span class="title">Decision Maker</span>
     </nav>
 
-    <main>
-      <h1><%= pollTitle %></h1>
-      <div>
-        <p>Thank you for your response! You can now view what other people have responded via the link below.</p>
-      </div>
-      <a href="/<%= pollId %>/results" class="results-link">
-        Click here to see results!
-      </a>
+    <main id="voted-content">
+        <h1><%= pollTitle %></h1>
+        <div>
+          <h2>Thank you for your response! You can now view what other people have responded via the link below.</h2>
+        </div>
+        <a href="/<%= pollId %>/results" class="results-link">
+          Click here to see results!
+        </a>
     </main>
   </body>
 
