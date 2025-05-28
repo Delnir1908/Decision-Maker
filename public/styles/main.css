@@ -1,0 +1,13 @@
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(128, 210, 251);
+  font-family: "Josefin Sans", sans-serif;
+  padding-top: 100px;
+  color: rgb(54, 53, 53);
+  align-items: center;
+}
+
+h1 {
+  padding-top: 1em;
+}

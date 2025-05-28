@@ -1,0 +1,87 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  font-size: x-large;
+  padding: 1em;
+  gap: 0.3em;
+}
+
+.individual-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.2em;
+}
+
+input {
+  border-color: rgb(54, 53, 53);
+  background-color: rgb(106, 201, 249);
+  border-radius: 1em;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.poll-features {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+#add-option {
+  background-color: rgb(106, 201, 249);
+  border-color: rgb(54, 53, 53);
+  color: rgb(54, 53, 53);
+  border-radius: 1em;
+  padding: 0.3em;
+  cursor: pointer;
+  margin-right: 0.5em;
+}
+
+.checkbox {
+  width: 1.5em;
+  height: 1.5rem;
+  accent-color: #2b78e4;
+  cursor: pointer;
+}
+
+#name-input {
+  margin-top: 1em;
+}
+
+.submission {
+  border-color: rgb(54, 53, 53);
+  background-color: #2b78e4;
+  border-radius: 1em;
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+}
+
+.message {
+  width: 100%;
+  height: 5em;
+  border-color: rgb(54, 53, 53);
+  background-color: rgb(106, 201, 249);
+  border-radius: 1em;
+  padding: 0.5em;
+  resize: none;
+}
+
+.custom-message {
+  cursor: pointer;
+}
+
+.custom-message:hover {
+  color: #2b78e4;
+}
+
+.fa-trash-can {
+  cursor: pointer;
+}
+
+.fa-trash-can:hover {
+  color: rgb(207, 42, 42);
+}
