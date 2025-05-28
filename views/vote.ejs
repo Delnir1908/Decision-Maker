@@ -111,16 +111,16 @@
 
           option.addEventListener('dragenter', (e) => {
             e.preventDefault();
-            if (option !== dragged) option.style.border = '2px dashed navy';
+            if (option !== dragged) option.style.border = '0.12em dashed navy';
           });
 
           option.addEventListener('dragleave', (e) => {
-            option.style.border = '1px solid navy';
+            option.style.border = '0.12em solid navy';
           });
 
           option.addEventListener('drop', (e) => {
             e.preventDefault();
-            option.style.border = '1px solid navy';
+            option.style.border = '0.12em solid navy';
             if (option !== dragged) {
               // Get the bounding rectangles to determine position
               const options = Array.from(container.querySelectorAll('.vote-options'));
