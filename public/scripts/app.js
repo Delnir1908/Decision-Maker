@@ -65,11 +65,20 @@ $(document).ready(function() {
     const creator = $form.find('input[name="creator"]').val();
     const email = $form.find('input[name="email"]').val();
 
+    const requireNames = function() {
+      if ($(':checkbox').is(':checked')) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     const $data = {
       title: title,
       options: optionsArray,
       creator: creator,
-      email: email
+      email: email,
+      requires_name: requireNames(),
     }
 
     console.log('Form Data:', $data);

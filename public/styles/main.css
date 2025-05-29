@@ -8,6 +8,9 @@ body {
   align-items: center;
 }
 
+h1 {
+  padding-top: 1em;
+}
 
 .vote-options {
   background-color: rgb(31, 162, 223);

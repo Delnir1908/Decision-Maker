@@ -27,6 +27,7 @@ input {
 .poll-features {
   display: flex;
   align-items: center;
+  flex-direction: row;
   flex-direction: column;
 }
 
@@ -36,6 +37,14 @@ input {
   color: rgb(54, 53, 53);
   border-radius: 1em;
   padding: 0.3em;
+  cursor: pointer;
+  margin-right: 0.5em;
+}
+
+.checkbox {
+  width: 1.5em;
+  height: 1.5rem;
+  accent-color: #2b78e4;
   cursor: pointer;
 }
 

@@ -9,8 +9,8 @@ const getPolls = () => {
 
 const createPoll =  (data) => {
   return db.query(
-    'INSERT INTO polls (title, requires_name) VALUES ($1, $2) RETURNING *', 
-    [data.title, null])
+    'INSERT INTO polls (title, requires_name, creator_name, creator_email) VALUES ($1, $2, $3, $4) RETURNING *', 
+    [data.title, data.requires_name, data.creator, data.email])
     .then((result) => {
       console.log('New poll ID:', result.rows[0].id);
       return result.rows[0].id;
